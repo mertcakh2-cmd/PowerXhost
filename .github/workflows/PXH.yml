@@ -1,1 +1,71 @@
+name: PowerXhost CI
 
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+  pull_request:
+    branches:
+      - main
+      - develop
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify Project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Compile Hosting Backend
+        run: gradle clean shadowJar
+
+      - name: Verify Hosting JAR
+        run: |
+          test -f build/libs/PowerXhost.jar
+          echo "PowerXhost JAR generated successfully."
+
+      - name: Verify Website Files
+        run: |
+          test -f WebSite/index.html
+          test -f WebSite/style.css
+          test -f WebSite/script.js
+          echo "Website files found."
+
+      - name: Check JavaScript
+        run: |
+          node --check WebSite/script.js
+          echo "JavaScript syntax is valid."
+
+      - name: Verify Android Files
+        run: |
+          test -f Android/settings.gradle.kts
+          test -f Android/build.gradle.kts
+          test -f Android/app/build.gradle.kts
+          test -f Android/app/src/main/AndroidManifest.xml
+          test -f Android/app/src/main/java/com/powerhost/MainActivity.java
+
+          echo "Android project files found."
+
+      - name: Upload Build
+        uses: actions/upload-artifact@v4
+        with:
+          name: PowerXhost-CI-Build
+          path: build/libs/PowerXhost.jar
