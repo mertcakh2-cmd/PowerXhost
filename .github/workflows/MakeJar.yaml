@@ -1,4 +1,4 @@
-name: Build PowerXhost JAR
+name: PowerXhost - Build Server
 
 on:
   push:
@@ -6,9 +6,14 @@ on:
       - main
     paths:
       - 'Hosting/**'
+      - 'WebSite/**'
       - 'build.gradle.kts'
       - 'settings.gradle.kts'
       - '.github/workflows/MakeJar.yaml'
+
+  pull_request:
+    branches:
+      - main
 
   workflow_dispatch:
 
@@ -17,33 +22,39 @@ permissions:
 
 jobs:
   build:
-    name: Compile PowerXhost
+    name: Build PowerXhost
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Setup Java 21
-        uses: actions/setup-java@v4
+      - name: Install Java 21
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '21'
+          cache: gradle
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v5
 
-      - name: Build JAR
-        run: gradle clean shadowJar
+      - name: Compile Java
+        run: gradle clean compileJava
+
+      - name: Build executable JAR
+        run: gradle shadowJar
 
       - name: Verify JAR
         run: |
           test -f build/libs/PowerXhost.jar
           jar tf build/libs/PowerXhost.jar
+          echo "PowerXhost JAR built successfully!"
 
-      - name: Upload PowerXhost JAR
+      - name: Upload executable JAR
         uses: actions/upload-artifact@v4
         with:
-          name: PowerXhost-JAR
+          name: PowerXhost-Server
           path: build/libs/PowerXhost.jar
           if-no-files-found: error
+          retention-days: 30
