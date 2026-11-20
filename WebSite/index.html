@@ -1,1 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <meta name="theme-color" content="#09090d">
+    <meta name="description" content="PowerXhost Minecraft Server Hosting Dashboard">
+
+    <title>PowerXhost — Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">P</div>
+
+            <div class="brand-text">
+                <h2>PowerXhost</h2>
+                <span>SERVER MANAGEMENT</span>
+            </div>
+        </div>
+
+        <div class="sidebar-label">MENU</div>
+
+        <nav>
+            <a href="#overview" class="nav-item active">
+                <span class="nav-icon">▦</span>
+                Overview
+            </a>
+
+            <a href="#console" class="nav-item">
+                <span class="nav-icon">⌘</span>
+                Console
+            </a>
+
+            <a href="#configuration" class="nav-item">
+                <span class="nav-icon">⚙</span>
+                Configuration
+            </a>
+
+            <a href="#connection" class="nav-item">
+                <span class="nav-icon">⌁</span>
+                Connection
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-status">
+                <span class="status-dot" id="sidebarDot"></span>
+
+                <div>
+                    <strong id="sidebarStatus">Disconnected</strong>
+                    <small>Backend connection</small>
+                </div>
+            </div>
+
+            <div class="version">POWERXHOST v1.0.0</div>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+        <header class="topbar">
+
+            <div>
+                <span class="breadcrumb">PowerXhost / Dashboard</span>
+                <h1>Dashboard</h1>
+            </div>
+
+            <div class="top-actions">
+                <span class="server-badge offline" id="statusBadge">
+                    <span></span>
+                    OFFLINE
+                </span>
+
+                <button class="icon-button" id="refreshButton" title="Refresh">
+                    ↻
+                </button>
+            </div>
+
+        </header>
+
+
+        <!-- OVERVIEW -->
+        <section id="overview">
+
+            <div class="welcome-card">
+
+                <div class="welcome-content">
+                    <span class="eyebrow">CONTROL CENTER</span>
+
+                    <h2>Welcome to<br>PowerXhost.</h2>
+
+                    <p>
+                        Your Minecraft server, managed from one place.
+                        Control your server and monitor its performance.
+                    </p>
+
+                    <div class="welcome-buttons">
+                        <button class="button primary" id="startButton">
+                            Start server
+                        </button>
+
+                        <button class="button outline" id="stopButton">
+                            Stop server
+                        </button>
+                    </div>
+                </div>
+
+                <div class="welcome-decoration">
+                    <div class="orbit orbit-one"></div>
+                    <div class="orbit orbit-two"></div>
+                    <div class="core">P</div>
+                </div>
+
+            </div>
+
+
+            <!-- STATS -->
+            <div class="section-heading">
+                <div>
+                    <h2>Server statistics</h2>
+                    <p>Live information from your host.</p>
+                </div>
+            </div>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>CPU CORES</span>
+                        <span class="stat-icon">⌘</span>
+                    </div>
+
+                    <strong id="cpuValue">--</strong>
+                    <small>Available processors</small>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>MEMORY</span>
+                        <span class="stat-icon">▤</span>
+                    </div>
+
+                    <strong id="memoryValue">--</strong>
+                    <small>Host JVM memory</small>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>SERVER STATUS</span>
+                        <span class="stat-icon">◉</span>
+                    </div>
+
+                    <strong id="serverState">Offline</strong>
+                    <small id="serverDescription">Waiting for server</small>
+                </div>
+
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>SERVER PORT</span>
+                        <span class="stat-icon">⇄</span>
+                    </div>
+
+                    <strong id="serverPort">25565</strong>
+                    <small>Minecraft Java Edition</small>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SERVER CONTROLS -->
+        <section class="panel-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Server controls</h2>
+                    <p>Manage your Minecraft server.</p>
+                </div>
+            </div>
+
+            <div class="control-card">
+
+                <div class="control-info">
+                    <div class="control-icon">▣</div>
+
+                    <div>
+                        <h3>Minecraft server</h3>
+                        <p>Paper server instance</p>
+                    </div>
+                </div>
+
+                <div class="control-buttons">
+                    <button class="button primary" id="startButton2">
+                        Start
+                    </button>
+
+                    <button class="button danger" id="stopButton2">
+                        Stop
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONFIGURATION -->
+        <section id="configuration" class="panel-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Configuration</h2>
+                    <p>Customize your Minecraft server.</p>
+                </div>
+            </div>
+
+            <div class="settings-card">
+
+                <div class="field">
+                    <label for="paperVersion">Paper version</label>
+
+                    <input
+                        id="paperVersion"
+                        type="text"
+                        placeholder="1.21.4"
+                        value="1.21.4"
+                    >
+
+                    <small>PaperMC Minecraft version.</small>
+                </div>
+
+
+                <div class="field">
+                    <label for="serverPortInput">Server port</label>
+
+                    <input
+                        id="serverPortInput"
+                        type="number"
+                        min="1024"
+                        max="65535"
+                        value="25565"
+                    >
+
+                    <small>Default Minecraft port: 25565.</small>
+                </div>
+
+
+                <div class="field">
+                    <label for="memoryInput">Memory allocation</label>
+
+                    <div class="input-with-unit">
+                        <input
+                            id="memoryInput"
+                            type="number"
+                            min="1024"
+                            max="32768"
+                            value="2048"
+                        >
+
+                        <span>MB</span>
+                    </div>
+
+                    <small>Maximum server JVM memory.</small>
+                </div>
+
+
+                <div class="settings-footer">
+                    <span id="configMessage">Configuration not loaded.</span>
+
+                    <button class="button primary" id="saveConfig">
+                        Save changes
+                    </button>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONSOLE -->
+        <section id="console" class="panel-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Server console</h2>
+                    <p>View logs and execute commands.</p>
+                </div>
+
+                <button class="button outline small" id="clearConsole">
+                    Clear display
+                </button>
+            </div>
+
+
+            <div class="console-card">
+
+                <div class="console-topbar">
+                    <div class="console-lights">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+
+                    <span>POWERXHOST TERMINAL</span>
+
+                    <span class="live-label">LIVE</span>
+                </div>
+
+
+                <pre id="consoleOutput">PowerXhost console initialized.
+Waiting for backend connection...</pre>
+
+
+                <div class="console-input">
+
+                    <span class="terminal-symbol">&gt;</span>
+
+                    <input
+                        id="commandInput"
+                        type="text"
+                        placeholder="Enter a server command..."
+                        autocomplete="off"
+                    >
+
+                    <button id="sendCommand">
+                        Send
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONNECTION -->
+        <section id="connection" class="panel-section">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Backend connection</h2>
+                    <p>Connect your PowerXhost server manager.</p>
+                </div>
+            </div>
+
+
+            <div class="settings-card">
+
+                <div class="field">
+                    <label for="backendUrl">Backend address</label>
+
+                    <input
+                        id="backendUrl"
+                        type="url"
+                        placeholder="http://127.0.0.1:8765"
+                    >
+                </div>
+
+
+                <div class="field">
+                    <label for="accessToken">Access token</label>
+
+                    <input
+                        id="accessToken"
+                        type="password"
+                        placeholder="Enter your backend token"
+                    >
+                </div>
+
+
+                <div class="connection-footer">
+
+                    <span id="connectionMessage">
+                        Not connected
+                    </span>
+
+                    <button class="button primary" id="connectButton">
+                        Connect
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <footer>
+            <span>POWERXHOST</span>
+            <span>Built for Minecraft server management.</span>
+        </footer>
+
+    </main>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
